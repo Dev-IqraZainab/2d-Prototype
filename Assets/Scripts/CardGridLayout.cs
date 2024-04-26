@@ -4,10 +4,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RectTransform))]
 public class CardGridLayout : LayoutGroup
 {
-    [SerializeField] private int rows = 4;                 // Number of rows in the grid layout
-    [SerializeField] private int columns = 5;              // Number of columns in the grid layout
-    [SerializeField] private Vector2 spacing = new Vector2(10f, 10f);   // Spacing between cards in the grid layout
-    [SerializeField] private int preferredTopPadding = 0; // Preferred top padding for the grid layout
+    public int rows = 4;                 // Number of rows in the grid layout
+    public int columns = 5;              // Number of columns in the grid layout
+    public Vector2 spacing = new Vector2(10f, 10f);   // Spacing between cards in the grid layout
+    public int preferredPadding = 0; // Preferred top padding for the grid layout
 
     // Override method to calculate the layout input vertically
     public override void CalculateLayoutInputVertical()
@@ -30,7 +30,7 @@ public class CardGridLayout : LayoutGroup
         // Adjust card width if necessary to fit within parent width
         if (cardWidth * columns + spacing.x * (columns - 1) > parentWidth)
         {
-            cardWidth = (parentWidth - 2 * preferredTopPadding - (columns - 1) * spacing.x) / columns;
+            cardWidth = (parentWidth - 2 * preferredPadding - (columns - 1) * spacing.x) / columns;
             cardHeight = cardWidth;
         }
 
