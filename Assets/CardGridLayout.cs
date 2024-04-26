@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(RectTransform))]
 public class CardGridLayout : LayoutGroup
 {
-    public int rows;
-    public int columns;
-    public Vector2 spacing;
-    public Vector2 cardSize;
-    public int preferredTopPadding;
+    [SerializeField] private int rows = 4;
+    [SerializeField] private int columns = 5;
+    [SerializeField] private Vector2 spacing = new Vector2(10f, 10f);
+    [SerializeField] private int preferredTopPadding = 0;
+  
     public override void CalculateLayoutInputVertical()
     {
         if (rows == 0 || columns == 0)
@@ -29,7 +29,7 @@ public class CardGridLayout : LayoutGroup
             cardWidth = (parentWidth - 2 * preferredTopPadding - (columns - 1) * spacing.x) / columns;
             cardHeight = cardWidth;
         }
-        cardSize = new Vector2(cardWidth, cardHeight);
+        Vector2 cardSize = new Vector2(cardWidth, cardHeight);
         padding.left = Mathf.FloorToInt((parentWidth - columns * cardWidth- spacing.x*(columns-1)) / 2);
         padding.top = Mathf.FloorToInt((parentHeight - rows * cardHeight- spacing.y*(rows -1)) / 2);
         padding.bottom = padding.top;
