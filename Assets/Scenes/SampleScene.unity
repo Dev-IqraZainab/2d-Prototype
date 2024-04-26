@@ -2054,15 +2054,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 252
+    m_Left: 50
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
+    m_Top: 43
+    m_Bottom: 43
+  m_ChildAlignment: 4
   rows: 3
   columns: 4
   spacing: {x: 50, y: 50}
-  cardSize: {x: 196.45508, y: 196.45508}
   preferredTopPadding: 50
 --- !u!1 &2092029701
 GameObject:
