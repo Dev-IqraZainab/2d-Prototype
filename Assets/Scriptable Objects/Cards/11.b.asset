@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232a90416bfc7a940861318d03e27bd2, type: 3}
   m_Name: 11.b
   m_EditorClassIdentifier: 
-  cardName: 
-  pairName: 
+  cardName: 11 B
+  pairName: 11 A
   cardImage: {fileID: 21300000, guid: c86ea878ae3022948b568e84652db848, type: 3}
