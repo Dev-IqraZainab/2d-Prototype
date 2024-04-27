@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
     private string secondMemorySpriteName; // Name of the sprite on the second clicked card
     private bool checkWon = false; // Flag for checking if the game is won
     public static int totalCards; // Total number of cards in the game
+    private int matchedPairsCount = 0; // Number of matched card pairs
 
 
 
@@ -40,6 +41,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private float maxTimerValue = 50f; // Maximum value for the timer
     [SerializeField] private TextMeshProUGUI timerUi; // UI element for displaying timer
 
+    [SerializeField] private TextMeshProUGUI moveUi; // UI element for displaying moves
+    [SerializeField] private TextMeshProUGUI pairUi; // UI element for displaying pairs
 
     private void Start()
     {
@@ -48,6 +51,9 @@ public class GameController : MonoBehaviour
         SoundManager.instance.PlayGameplayMusic();
 
         timerManager.InitializeTimer(maxTimerValue, timerUi, this);
+        moveUi.text =moveCount.ToString();
+        pairUi.text =matchedPairsCount.ToString();
+
         timerManager.StartTimer();
     }
 
@@ -113,6 +119,8 @@ public class GameController : MonoBehaviour
         }
         // Increment move count
         moveCount++;
+        moveUi.text = moveCount.ToString();
+
     }
 
     private void Detect()
@@ -121,6 +129,9 @@ public class GameController : MonoBehaviour
         if (firstMemorySpriteName == secondMemorySpriteName)
         {
             winCardCount++;
+            matchedPairsCount++; // Increment matched pairs count
+            pairUi.text = matchedPairsCount.ToString();
+
             if (winCardCount == totalCards / 2)
             {
                 checkWon = true;
@@ -151,12 +162,7 @@ public class GameController : MonoBehaviour
         if (!checkWon)
         {
             timerManager.UpdateTimer();
-            ////timerValue -= Time.deltaTime;
-            ////timerUi.text = "Time: " + Mathf.Max(timerValue, 0).ToString("0");
-            //if (timerValue <= 0)
-            //{
-            //    DisplayGameOver("The Time is Over\nBetter Luck Next Time");
-            //}
+         
         }
     }
 

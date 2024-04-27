@@ -305,6 +305,8 @@ MonoBehaviour:
   mainMenuMusic: {fileID: 8300000, guid: da90d67f8158bde4daa558128f08bf5a, type: 3}
   gameplayMusic: {fileID: 8300000, guid: ae66b0b0668698d488f9ecf4c6e20e04, type: 3}
   cardFlipSound: {fileID: 8300000, guid: b6e3eb0f890e56f4cab45840de5a9e40, type: 3}
+  cardMatchSound: {fileID: 8300000, guid: 0db4e7a0bef8a2e499be3712557b976c, type: 3}
+  cardMismatchSound: {fileID: 8300000, guid: 228fa3156891ff34aa9cf7318cd1b63d, type: 3}
   levelCompleteSound: {fileID: 8300000, guid: 18fe48161b0f497408d2d5a4ff27df0c, type: 3}
 --- !u!1 &271535130
 GameObject:
