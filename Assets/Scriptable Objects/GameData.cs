@@ -15,4 +15,6 @@ public class GameData : ScriptableObject
     [Header("Grid Layout")]
     public int prefferedTopBottomPadding;
     public Vector2 spacing;
+
+
 }

@@ -8,6 +8,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip mainMenuMusic;
     public AudioClip gameplayMusic;
     public AudioClip cardFlipSound;
+    public AudioClip cardMatchSound;
+    public AudioClip cardMismatchSound;
     public AudioClip levelCompleteSound;
 
     private AudioSource musicSource;
@@ -60,6 +62,21 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+
+    public void PlayMatchSound()
+    {
+        if (cardMatchSound != null)
+        {
+            soundEffectSource.PlayOneShot(cardMatchSound);
+        }
+    }
+    public void PlayMismatchSound()
+    {
+        if (cardMismatchSound != null)
+        {
+            soundEffectSource.PlayOneShot(cardMismatchSound);
+        }
+    }
     public void PlayLevelCompleteSound()
     {
         if (levelCompleteSound != null)

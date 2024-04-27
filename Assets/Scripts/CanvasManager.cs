@@ -13,10 +13,8 @@ public class CanvasManager : MonoBehaviour
     public GameData HardLevel;
 
     GameData gameData;
-    //List<CardController> cardController;
     public void Awake()
     {
-        //cardController = new List<CardController>();
         GetGameDataDifficulty();
         SetCardGridLayoutParams();
         GenerateCards();
@@ -26,7 +24,7 @@ public class CanvasManager : MonoBehaviour
     private void GenerateCards()
     {
 
-        GameController.TotalCards = gameData.rows * gameData.columns;
+        GameController.totalCards = gameData.rows * gameData.columns;
         //for (int i = 0; i < GameController.TotalCards; i++)
         //{
         //    GameObject card = Instantiate(cardPrefab,
