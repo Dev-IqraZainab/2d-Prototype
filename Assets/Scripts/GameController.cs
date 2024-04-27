@@ -30,7 +30,8 @@ public class GameController : MonoBehaviour
     public bool checkWon=false;
     void Start()
     {
-        for(int i=0;i< TotalCards; i++)
+        SoundManager.instance.PlayGameplayMusic();
+        for (int i=0;i< TotalCards; i++)
         {
             GameObject cardInstance = Instantiate(CardPrefab);
             cardInstance.transform.SetParent(parent.transform);
@@ -68,6 +69,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Click Done "+
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
+        SoundManager.instance.PlayCardFlipSound();
         //FirstCardPositionValue = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
         if(!FirstClick)
         {
@@ -104,6 +106,8 @@ public class GameController : MonoBehaviour
             {
                 checkWon = true;
                 GameOverPanel.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Congratulations \n You Win The Game.";
+                SoundManager.instance.PlayLevelCompleteSound();
+                SoundManager.instance.StopMusic();
                 GameOverPanel.SetActive(true);
             }
         }
@@ -128,9 +132,11 @@ public class GameController : MonoBehaviour
             if (timerValue < 0)
             {
                 TimerUi.text = "Time: 0";
-
+                SoundManager.instance.StopMusic();
+                SoundManager.instance.PlayLevelCompleteSound();
                 GameOverPanel.SetActive(true);
                 GameOverPanel.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = "The Time is Over\nBetter Luck Next Time ";
+                
             }
         }
     }
