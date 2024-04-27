@@ -633,6 +633,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 43ca2834b0e38d5419e8c00af37e3984, type: 3}
   - {fileID: 21300000, guid: 51d486c381590b04abdaceb8f934eddd, type: 3}
   - {fileID: 21300000, guid: 1a1e4fc65ab86f24d94a8dfa8b4dd7ce, type: 3}
+  - {fileID: 21300000, guid: bd9893da29ed3a24393c6742ec3df30d, type: 3}
+  - {fileID: 21300000, guid: 103b38055fa180f4da868095cf506b3d, type: 3}
+  - {fileID: 21300000, guid: f59771000ddeed94883c1c7526f263f6, type: 3}
+  - {fileID: 21300000, guid: 7636716c914604f4f8323bc1b331f0da, type: 3}
+  - {fileID: 21300000, guid: cb181a2e1b901b344acb8c3972269969, type: 3}
+  - {fileID: 21300000, guid: 5b7ad418f594c7a4c9b11eb45c466a8b, type: 3}
+  - {fileID: 21300000, guid: 1a7471efe2ec4b64ebe9bf590f8289a2, type: 3}
+  - {fileID: 21300000, guid: 2434ad33d8f59c3438f0c9f42e68874b, type: 3}
+  - {fileID: 21300000, guid: 524ec8e57cb528f439e1d5631da88b01, type: 3}
   PickedSprite: []
   FirstMemorySpriteName: 
   SecondMemorySpriteName: 
@@ -1767,9 +1776,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: QuitToMenu
+      - m_Target: {fileID: 519420033}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2337,6 +2346,7 @@ GameObject:
   - component: {fileID: 2088789682}
   - component: {fileID: 2088789683}
   - component: {fileID: 2088789684}
+  - component: {fileID: 2088789685}
   m_Layer: 5
   m_Name: GridPanel
   m_TagString: Untagged
@@ -2406,6 +2416,23 @@ MonoBehaviour:
   columns: 6
   spacing: {x: 50, y: 50}
   preferredPadding: 50
+--- !u!114 &2088789685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088789681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aae1b7f36499914eb3eb3b8b7a3daee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 2304951329608078257, guid: ae5ccaa4d4e93604799937dea14c23b9, type: 3}
+  collection: {fileID: 11400000, guid: ac43a8f04c3a55f4893abe1770b50387, type: 2}
+  easyLevel: {fileID: 11400000, guid: a3c85cacfc730e94a9e36e1e4e100208, type: 2}
+  mediumLevel: {fileID: 11400000, guid: 09bea9e0b2fc0d04bb11a2a82fb15904, type: 2}
+  HardLevel: {fileID: 11400000, guid: 4c489deea015524469e4baa3073b529e, type: 2}
 --- !u!1 &2127917876
 GameObject:
   m_ObjectHideFlags: 0

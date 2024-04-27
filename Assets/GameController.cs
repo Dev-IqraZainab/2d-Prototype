@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject CardPrefab;
     public GameObject parent;
-    int TotalCards = 12;
+    public static int TotalCards;
     public Sprite[] ObjectSprite;
     public List<Sprite> PickedSprite = new List<Sprite>();
     bool FirstClick = false;
