@@ -1,13 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
 {
-    public GameObject cardPrefab;
-    public CardCollection collection;
-
     public GameData easyLevel;
     public GameData mediumLevel;
     public GameData HardLevel;
@@ -25,13 +20,7 @@ public class CanvasManager : MonoBehaviour
     {
 
         GameController.totalCards = gameData.rows * gameData.columns;
-        //for (int i = 0; i < GameController.TotalCards; i++)
-        //{
-        //    GameObject card = Instantiate(cardPrefab,
-        //        this.transform);
-        //    card.transform.name = "card(" + i.ToString() + ")";
-        //    cardController.Add(card.GetComponent<CardController>());
-        //}
+      
     }
 
     private void SetCardGridLayoutParams()

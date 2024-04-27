@@ -7,59 +7,68 @@ using System.Linq;
 
 public class GameController : MonoBehaviour
 {
-    // Serialized fields for inspector customization
     [Header("Prefab and UI Elements")]
-    [SerializeField] private GameObject cardPrefab; // Prefab for the card object
-    [SerializeField] private GameObject parent; // Parent object for organizing cards
-    [SerializeField] private Sprite[] objectSprites; // Sprites used for the cards
-    [SerializeField] private Sprite cardBackground; // Background sprite for the cards
-    [SerializeField] private GameObject gameOverPanel; // Panel for displaying game over message
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private GameObject parent;
+    [SerializeField] private Sprite[] objectSprites;
+    [SerializeField] private Sprite cardBackground;
+    [SerializeField] private GameObject gameOverPanel;
 
-    // Lists to store card objects, random card values, and picked sprites
     [Header("Game Logic")]
-    private List<Card> cards = new List<Card>(); // List of card objects
-    private List<int> randomCardValue = new List<int>(); // List of random card values
-    private List<Sprite> pickedSprites = new List<Sprite>(); // List of picked sprites
+    private List<Card> cards = new List<Card>();
+    private List<int> randomCardValue = new List<int>();
+    private List<Sprite> pickedSprites = new List<Sprite>();
 
-    // Variables for game logic
-    private float timerValue; // Current value of the timer
-    private int winCardCount = 0; // Number of matched card pairs
-    private int moveCount = 0; // Number of moves made by the player
-    private bool firstClick = false; // Flag for first card click
-    private bool secondClick = false; // Flag for second card click
-    private int firstCardIndex; // Index of the first clicked card
-    private int secondCardIndex; // Index of the second clicked card
-    private string firstMemorySpriteName; // Name of the sprite on the first clicked card
-    private string secondMemorySpriteName; // Name of the sprite on the second clicked card
-    private bool checkWon = false; // Flag for checking if the game is won
-    public static int totalCards; // Total number of cards in the game
-    private int matchedPairsCount = 0; // Number of matched card pairs
+    private int winCardCount = 0;
+    private int moveCount = 0;
+    private bool firstClick = false;
+    private bool secondClick = false;
+    private int firstCardIndex;
+    private int secondCardIndex;
+    private string firstMemorySpriteName;
+    private string secondMemorySpriteName;
+    private bool checkWon = false;
+    public static int totalCards;
+    private int matchedPairsCount = 0;
 
-
-
-    [SerializeField] private TimeManager timerManager; // Reference to the TimerManager
-    [SerializeField] private float maxTimerValue = 50f; // Maximum value for the timer
-    [SerializeField] private TextMeshProUGUI timerUi; // UI element for displaying timer
-
-    [SerializeField] private TextMeshProUGUI moveUi; // UI element for displaying moves
-    [SerializeField] private TextMeshProUGUI pairUi; // UI element for displaying pairs
+    [SerializeField] private TimeManager timerManager;
+    [SerializeField] private float maxTimerValue = 50f;
+    [SerializeField] private TextMeshProUGUI timerUi;
+    [SerializeField] private TextMeshProUGUI moveUi;
+    [SerializeField] private TextMeshProUGUI pairUi;
 
     private void Start()
     {
-        // Initialize the game
+        InitializeGame();
+    }
+
+    // Initialize the game
+    private void InitializeGame()
+    {
+        InitializeManagers();
+        InitializeUI();
         InitializeCards();
+        InitializeCounts();
         SoundManager.instance.PlayGameplayMusic();
-
-        timerManager.InitializeTimer(maxTimerValue, timerUi, this);
-        moveUi.text =moveCount.ToString();
-        pairUi.text =matchedPairsCount.ToString();
-
         timerManager.StartTimer();
     }
 
+    // Initialize managers, such as the timer manager
+    private void InitializeManagers()
+    {
+        timerManager.InitializeTimer(maxTimerValue, timerUi, this);
+    }
+
+    // Initialize UI elements
+    private void InitializeUI()
+    {
+        moveUi.text = moveCount.ToString();
+        pairUi.text = matchedPairsCount.ToString();
+    }
+
+    // Initialize card objects
     private void InitializeCards()
     {
-        // Instantiate and organize card objects
         for (int i = 0; i < totalCards; i++)
         {
             GameObject cardObject = Instantiate(cardPrefab, parent.transform);
@@ -72,9 +81,9 @@ public class GameController : MonoBehaviour
         CollectSprites();
     }
 
+    // Collect sprites to be used on cards
     private void CollectSprites()
     {
-        // Assign sprites to cards
         int index = 0;
         for (int i = 0; i < totalCards; i++)
         {
@@ -88,96 +97,120 @@ public class GameController : MonoBehaviour
         GenerateRandomNumbers();
     }
 
+    // Generate random numbers for shuffling card values
     private void GenerateRandomNumbers()
     {
-        // Generate random numbers for shuffling card values
         randomCardValue = randomCardValue.OrderBy(outValue => System.Guid.NewGuid()).ToList();
     }
 
+    // Handle card click event
     private void OnCardClick(Card card)
     {
-        // Handle card click events
         int index = cards.IndexOf(card);
         if (!firstClick)
         {
-            firstCardIndex = index;
-            firstMemorySpriteName = pickedSprites[randomCardValue[index]].name;
-            card.Flip(pickedSprites[randomCardValue[index]]);
-            card.Disable();
-            firstClick = true;
-            SoundManager.instance.PlayCardFlipSound(); // Play card flip sound
-
+            HandleFirstClick(index, card);
         }
         else if (!secondClick)
         {
-            secondCardIndex = index;
-            secondMemorySpriteName = pickedSprites[randomCardValue[index]].name;
-            card.Flip(pickedSprites[randomCardValue[index]]);
-            card.Disable();
-            secondClick = true;
-            Invoke(nameof(Detect), 0.40f);
+            HandleSecondClick(index, card);
         }
-        // Increment move count
         moveCount++;
         moveUi.text = moveCount.ToString();
-
     }
 
+    // Handle first card click
+    private void HandleFirstClick(int index, Card card)
+    {
+        firstCardIndex = index;
+        firstMemorySpriteName = pickedSprites[randomCardValue[index]].name;
+        card.Flip(pickedSprites[randomCardValue[index]]);
+        card.Disable();
+        firstClick = true;
+        SoundManager.instance.PlayCardFlipSound();
+    }
+
+    // Handle second card click
+    private void HandleSecondClick(int index, Card card)
+    {
+        secondCardIndex = index;
+        secondMemorySpriteName = pickedSprites[randomCardValue[index]].name;
+        card.Flip(pickedSprites[randomCardValue[index]]);
+        card.Disable();
+        secondClick = true;
+        Invoke(nameof(Detect), 0.40f);
+    }
+
+    // Detect if the clicked cards match
     private void Detect()
     {
-        // Compare clicked card sprites and handle match/mismatch
         if (firstMemorySpriteName == secondMemorySpriteName)
         {
-            winCardCount++;
-            matchedPairsCount++; // Increment matched pairs count
-            pairUi.text = matchedPairsCount.ToString();
-
-            if (winCardCount == totalCards / 2)
-            {
-                checkWon = true;
-                DisplayGameOver("Congratulations \n You Win The Game.");
-            }
-            else
-            {
-                SoundManager.instance.PlayMatchSound(); // Play match sound
-
-            }
+            HandleMatch();
         }
         else
         {
-            cards[firstCardIndex].Reset(cardBackground);
-            cards[secondCardIndex].Reset(cardBackground);
-            cards[firstCardIndex].Enable();
-            cards[secondCardIndex].Enable();
-            SoundManager.instance.PlayMismatchSound(); // Play mismatch sound
-
+            HandleMismatch();
         }
         firstClick = false;
         secondClick = false;
     }
 
-    private void Update()
+    // Handle matching cards
+    private void HandleMatch()
     {
-        
-        if (!checkWon)
+        winCardCount++;
+        matchedPairsCount++;
+        pairUi.text = matchedPairsCount.ToString();
+        if (winCardCount == totalCards / 2)
         {
-            timerManager.UpdateTimer();
-         
+            checkWon = true;
+            DisplayGameOver("Congratulations \n You Win The Game.");
+        }
+        else
+        {
+            SoundManager.instance.PlayMatchSound();
         }
     }
 
+    // Handle mismatched cards
+    private void HandleMismatch()
+    {
+        cards[firstCardIndex].Reset(cardBackground);
+        cards[secondCardIndex].Reset(cardBackground);
+        cards[firstCardIndex].Enable();
+        cards[secondCardIndex].Enable();
+        SoundManager.instance.PlayMismatchSound();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (!checkWon)
+        {
+            timerManager.UpdateTimer();
+        }
+    }
+
+    // Display game over message
     public void DisplayGameOver(string message)
     {
-        // Display game over message
         SoundManager.instance.StopMusic();
         SoundManager.instance.PlayLevelCompleteSound();
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = message;
     }
 
+    // Restart the game
     public void RestartGame()
     {
-        // Restart the game
         SceneManager.LoadScene(0);
+    }
+
+    // Initialize move count and matched pairs count
+    private void InitializeCounts()
+    {
+        moveCount = 0;
+        matchedPairsCount = 0;
     }
 }
